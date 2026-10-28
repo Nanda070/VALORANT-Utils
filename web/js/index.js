@@ -61,9 +61,13 @@ addEventListener("load", () => {
         }
 
         function renderStats(payload) {
-            const players = payload && (payload.players || payload.Players);
-            if (!players || typeof players !== "object") return;
-            const list = Object.values(players);
+            if (!payload || typeof payload !== "object") return;
+            const players = payload.players || payload.Players;
+            const list = Array.isArray(players)
+                ? players
+                : players && typeof players === "object"
+                    ? Object.values(players)
+                    : [];
             const selfId = payload.puuid;
             const grid = document.getElementById("rank-player-grid");
             const rankNames = [
@@ -90,7 +94,7 @@ addEventListener("load", () => {
             };
             document.getElementById("rank-stats-state").innerText = payload.state || "UNKNOWN";
             document.getElementById("rank-match-summary").innerText =
-                `${payload.mode || "Unknown mode"} · ${list.length} players`;
+                `${payload.mode || payload.queueId || "Unknown mode"} · ${list.length} players`;
             grid.replaceChildren();
             if (!list.length) {
                 grid.innerHTML = '<div class="rank-empty-state">No players are available yet.</div>';
