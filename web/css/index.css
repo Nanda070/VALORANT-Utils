@@ -37,11 +37,16 @@ body {
 
     font-family: Staatliches;
     font-size: 10vw;
-    margin-top: 10vw;
+    line-height: 0.95;
+    margin-top: 1.2vw;
     margin-right: 5vw;
     text-shadow: 1px 2px 0 black;
     position: relative;
 
+}
+
+.agent p {
+    margin: 0;
 }
 
 .agent-thumb{

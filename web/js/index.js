@@ -223,3 +223,11 @@ function openGithub() {
     eel.open_github();
 
 }
+
+function openGithubNanda() {
+
+    gtag('event', 'social_clicked_github_nanda', {});
+
+    eel.open_github_nanda();
+
+}
