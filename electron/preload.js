@@ -16,4 +16,8 @@ contextBridge.exposeInMainWorld("instalock", {
     onUpdateStarted: (callback) => ipcRenderer.on("update-download-started", () => callback()),
     onUpdateProgress: (callback) => ipcRenderer.on("update-download-progress", (_event, percent) => callback(percent)),
     onUpdateFinished: (callback) => ipcRenderer.on("update-download-finished", () => callback()),
+    onRankServerReady: (callback) => ipcRenderer.on("rank-server-ready", (_event, viewerPort, websocketPort) => callback(viewerPort, websocketPort)),
+    onRankOutput: (callback) => ipcRenderer.on("rank-output", (_event, line) => callback(line)),
+    onRankExit: (callback) => ipcRenderer.on("rank-exit", (_event, code, signal) => callback(code, signal)),
+    rankServerInfo: () => ipcRenderer.invoke("rank-server-info"),
 });

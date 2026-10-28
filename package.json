@@ -1,8 +1,8 @@
 {
-  "name": "valorant-instalocker",
-  "productName": "VALORANT Instalocker",
-  "version": "1.7.1",
-  "description": "A VALORANT instalocker with a clean GUI",
+  "name": "valorant-utils",
+  "productName": "VALORANT Utils",
+  "version": "1.8.0",
+  "description": "VALORANT utilities with instalocking and rank checking",
   "main": "electron/main.js",
   "author": "Nanda070",
   "scripts": {
@@ -12,13 +12,24 @@
   },
   "build": {
     "appId": "com.nanda070.valorant-instalocker",
-    "productName": "VALORANT Instalocker",
-    "artifactName": "VALORANT-Instalocker-Setup-${version}.${ext}",
+    "productName": "VALORANT Utils",
+    "artifactName": "VALORANT-Utils-Setup-${version}.${ext}",
     "files": [
       "electron/**/*",
       "web/**/*",
       "TERMS.txt",
       "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "integrations/rank-yoinker",
+        "to": "rank-yoinker",
+        "filter": [
+          "**/*",
+          "!__pycache__/**",
+          "!*.log"
+        ]
+      }
     ],
     "win": {
       "target": "nsis",
@@ -32,8 +43,8 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "VALORANT Instalocker",
-      "uninstallDisplayName": "VALORANT Instalocker",
+      "shortcutName": "VALORANT Utils",
+      "uninstallDisplayName": "VALORANT Utils",
       "license": "TERMS.txt",
       "installerIcon": "web/favicon.ico",
       "uninstallerIcon": "web/favicon.ico",
@@ -43,7 +54,7 @@
       {
         "provider": "github",
         "owner": "Nanda070",
-        "repo": "VALORANT-Instalocker"
+        "repo": "VALORANT-Utils"
       }
     ]
   },

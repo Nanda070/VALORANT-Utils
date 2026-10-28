@@ -18,7 +18,6 @@ SCREEN_DIMENSIONS = (853, 476)
 
 # Socials, don't touch! >:(
 INSTAGRAM = "https://www.instagram.com/kronsuki/"
-GITHUB = "https://github.com/SuppliedOrange/"
 GITHUB_NANDA = "https://github.com/Nanda070/"
 
 # Customize this to your preference

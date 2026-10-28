@@ -3,9 +3,10 @@ const { autoUpdater } = require("electron-updater");
 const fs = require("fs");
 const path = require("path");
 const { valorantRunning, readRegion, createClient } = require("./valorant");
+const { startRankYoinker, stopRankYoinker } = require("./rankYoinker");
 
-const WINDOW_WIDTH = 853;
-const WINDOW_HEIGHT = 476;
+const WINDOW_WIDTH = 857;
+const WINDOW_HEIGHT = 442;
 const LOOP_DELAY_MS = 3000;
 const MAX_FAVORITES = 3;
 const ALLOWED_HOSTS = new Set(["github.com", "www.instagram.com", "discord.com", "www.google.com"]);
@@ -15,6 +16,7 @@ let running = false;
 let agentCode = null;
 let seenMatches = [];
 let loopToken = 0;
+let rankServerInfo = null;
 
 function appFile(...parts) {
     return path.join(app.getAppPath(), ...parts);
@@ -171,7 +173,7 @@ function setupAutoUpdater() {
         dialog.showMessageBox(win, {
             type: "info",
             title: "Update available",
-            message: `VALORANT Instalocker ${info.version} is available. Download it now?`,
+            message: `VALORANT Utils ${info.version} is available. Download it now?`,
             buttons: ["Update", "Later"],
             defaultId: 0,
             cancelId: 1,
@@ -230,6 +232,12 @@ function createWindow() {
 app.whenReady().then(() => {
     createWindow();
     setupAutoUpdater();
+    startRankYoinker((event, ...args) => {
+        if (event === "server-ready") {
+            rankServerInfo = { viewerPort: args[0], websocketPort: args[1] };
+        }
+        send(`rank-${event}`, ...args);
+    });
 
     ipcMain.on("try-lock", (_event, agentName) => {
         tryLock(agentName);
@@ -256,8 +264,10 @@ app.whenReady().then(() => {
         return true;
     });
     ipcMain.handle("get-terms", () => fs.readFileSync(appFile("TERMS.txt"), "utf8"));
+    ipcMain.handle("rank-server-info", () => rankServerInfo);
 });
 
 app.on("window-all-closed", () => {
+    stopRankYoinker();
     app.quit();
 });

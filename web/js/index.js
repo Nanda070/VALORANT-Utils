@@ -12,12 +12,176 @@ addEventListener("load", () => {
     initializeFavoritesMenu();
     initializeTerms();
     initializeBridge();
+    initializeRankYoinker();
 
     if (typeof eel !== "undefined") {
         eel.expose(alertUser);
         eel.expose(askUserToChooseAgent);
         eel.expose(changeStatus);
         eel.expose(hideStopButton);
+    }
+
+    function initializeRankYoinker() {
+        const instalockerView = document.getElementById("instalocker-view");
+        const rankView = document.getElementById("rank-yoinker-view");
+        const viewerPage = document.getElementById("rank-viewer-page");
+        const statsPage = document.getElementById("rank-stats-page");
+        const instalockerTab = document.getElementById("instalocker-tab");
+        const rankTab = document.getElementById("rank-yoinker-tab");
+        const viewerTab = document.getElementById("rank-viewer-tab");
+        const statsTab = document.getElementById("rank-stats-tab");
+        const outputToggle = document.getElementById("rank-output-toggle");
+        const consolePanel = document.getElementById("rank-console");
+        const frame = document.getElementById("rank-viewer-frame");
+        const output = document.getElementById("rank-console-output");
+        const statsState = document.getElementById("rank-stats-state");
+        const api = bridge();
+        let statsSocket = null;
+        let statsPort = 1100;
+
+        function setViewer(info) {
+            if (!info || !info.viewerPort || !info.websocketPort) return;
+            frame.src = `http://127.0.0.1:${info.viewerPort}/matchLoadouts.html?port=${info.websocketPort}`;
+        }
+
+        function appendOutput(line) {
+            const row = document.createElement("div");
+            row.className = "rank-output-line";
+            row.textContent = line;
+            output.appendChild(row);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function showRankPage(page) {
+            const stats = page === "stats";
+            viewerPage.classList.toggle("hidden", stats);
+            statsPage.classList.toggle("hidden", !stats);
+            viewerTab.classList.toggle("active", !stats);
+            statsTab.classList.toggle("active", stats);
+        }
+
+        function renderStats(payload) {
+            const players = payload && (payload.players || payload.Players);
+            if (!players || typeof players !== "object") return;
+            const list = Object.values(players);
+            const selfId = payload.puuid;
+            const grid = document.getElementById("rank-player-grid");
+            const rankNames = [
+                "Unranked", "Unranked", "Unranked",
+                "Iron 1", "Iron 2", "Iron 3",
+                "Bronze 1", "Bronze 2", "Bronze 3",
+                "Silver 1", "Silver 2", "Silver 3",
+                "Gold 1", "Gold 2", "Gold 3",
+                "Platinum 1", "Platinum 2", "Platinum 3",
+                "Diamond 1", "Diamond 2", "Diamond 3",
+                "Ascendant 1", "Ascendant 2", "Ascendant 3",
+                "Immortal 1", "Immortal 2", "Immortal 3",
+                "Radiant",
+            ];
+            const rankLabel = (rank) => {
+                const numericRank = Number(rank);
+                if (!Number.isInteger(numericRank) || !rankNames[numericRank]) return rank;
+                if (numericRank < 3) return "UnR";
+                if (numericRank === 27) return "RAD";
+                const tierNames = ["I", "B", "S", "G", "P", "D", "A", "I"];
+                const tier = Math.floor((numericRank - 3) / 3);
+                const division = ((numericRank - 3) % 3) + 1;
+                return `${tierNames[tier]}${division}`;
+            };
+            document.getElementById("rank-stats-state").innerText = payload.state || "UNKNOWN";
+            document.getElementById("rank-match-summary").innerText =
+                `${payload.mode || "Unknown mode"} · ${list.length} players`;
+            grid.replaceChildren();
+            if (!list.length) {
+                grid.innerHTML = '<div class="rank-empty-state">No players are available yet.</div>';
+                return;
+            }
+            for (const player of list) {
+                const card = document.createElement("article");
+                card.className = `rank-player-card${player.puuid === selfId ? " current-player" : ""}`;
+                const value = (key, fallback = "N/A") => player[key] === null || player[key] === undefined || player[key] === "" ? fallback : player[key];
+                card.innerHTML = `
+                    <div class="rank-player-heading">
+                        <strong>${escapeHtml(value("name", "Unknown player"))}</strong>
+                        <span>${player.puuid === selfId ? "YOU" : escapeHtml(value("relation", "player"))}</span>
+                    </div>
+                    <div class="rank-player-agent">${escapeHtml(value("agent", "Unknown agent"))}</div>
+                    <div class="rank-player-metrics">
+                        <div><small>Rank</small><b>${escapeHtml(rankLabel(value("rank")))}</b></div>
+                        <div><small>RR</small><b>${escapeHtml(value("rr"))}</b></div>
+                        <div><small>Peak</small><b>${escapeHtml(rankLabel(value("peakRank")))}</b></div>
+                        <div><small>Level</small><b>${escapeHtml(value("level"))}</b></div>
+                        <div><small>K/D</small><b>${escapeHtml(value("kd"))}</b></div>
+                        <div><small>HS%</small><b>${escapeHtml(value("headshotPercentage"))}</b></div>
+                        <div><small>Win rate</small><b>${escapeHtml(value("winPercentage"))}</b></div>
+                        <div><small>Last active</small><b>${escapeHtml(value("lastActive"))}</b></div>
+                    </div>`;
+                grid.appendChild(card);
+            }
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, (character) => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;",
+            }[character]));
+        }
+
+        function connectStats(port) {
+            if (statsSocket) statsSocket.close();
+            statsPort = port || 1100;
+            statsSocket = new WebSocket(`ws://127.0.0.1:${statsPort}/`);
+            statsSocket.addEventListener("message", (event) => {
+                try {
+                    const message = JSON.parse(event.data);
+                    if (message.type === "heartbeat") renderStats(message.data || message);
+                } catch {
+                    // The embedded viewer remains responsible for its own payload handling.
+                }
+            });
+        }
+
+        const show = (rank) => {
+            instalockerView.classList.toggle("hidden", rank);
+            rankView.classList.toggle("hidden", !rank);
+            instalockerTab.classList.toggle("active", !rank);
+            rankTab.classList.toggle("active", rank);
+        };
+
+        instalockerTab.addEventListener("click", () => show(false));
+        rankTab.addEventListener("click", () => show(true));
+        viewerTab.addEventListener("click", () => showRankPage("viewer"));
+        statsTab.addEventListener("click", () => showRankPage("stats"));
+        statsState.addEventListener("click", () => showRankPage("viewer"));
+        outputToggle.addEventListener("click", () => {
+            const visible = consolePanel.classList.toggle("hidden");
+            outputToggle.innerText = visible ? "Show output" : "Hide output";
+            outputToggle.setAttribute("aria-expanded", String(!visible));
+        });
+        frame.addEventListener("load", () => {
+            document.getElementById("rank-connection-status").innerText = "CONNECTED";
+        });
+
+        if (!api) return;
+        api.onRankServerReady((viewerPort, websocketPort) => {
+            setViewer({ viewerPort, websocketPort });
+            appendOutput("Rank Checker viewer is ready.");
+            connectStats(websocketPort);
+        });
+        api.onRankOutput((line) => {
+            appendOutput(line);
+        });
+        api.onRankExit((code, signal) => {
+            document.getElementById("rank-connection-status").innerText = "STOPPED";
+            appendOutput(`Rank Checker stopped (${signal || `code ${code}`}).`);
+        });
+        setViewer({ viewerPort: 1101, websocketPort: 1100 });
+        connectStats(1100);
+        api.rankServerInfo().then((info) => {
+            if (info) {
+                setViewer(info);
+                connectStats(info.websocketPort);
+            }
+        });
     }
 });
 
@@ -319,11 +483,6 @@ function openExternal(url) {
     if (api) api.openExternal(url);
     else if (typeof eel !== "undefined") return false;
     return true;
-}
-
-function openGithub() {
-    gtag("event", "social_clicked_github", {});
-    if (!openExternal("https://github.com/SuppliedOrange/")) eel.open_github();
 }
 
 function openGithubNanda() {

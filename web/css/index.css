@@ -20,6 +20,239 @@ body {
 
 }
 
+.app-tabs {
+    height: 34px;
+    display: flex;
+    align-items: stretch;
+    gap: 1px;
+    padding: 3px 6px 0;
+    background: rgb(22, 18, 28);
+    box-sizing: border-box;
+}
+
+.app-tab {
+    padding: 0 16px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: rgba(240, 248, 255, 0.62);
+    font: 700 12px Cantarell, "Segoe UI", sans-serif;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+}
+
+.app-tab:hover,
+.app-tab.active {
+    color: #ff9aff;
+    border-bottom-color: #ff9aff;
+}
+
+.app-shell {
+    height: calc(100vh - 34px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.app-shell.hidden {
+    display: none !important;
+}
+
+.rank-view {
+    height: calc(100vh - 34px);
+    display: flex;
+    flex-direction: column;
+    background: #05080f;
+}
+
+.rank-subtabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    background: #0e0b13;
+    border-bottom: 1px solid rgba(255, 154, 255, 0.35);
+}
+
+.rank-subtab {
+    padding: 5px 10px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: rgba(240, 248, 255, 0.68);
+    font: 700 11px Cantarell, "Segoe UI", sans-serif;
+    cursor: pointer;
+}
+
+.rank-subtab:hover,
+.rank-subtab.active {
+    color: #ff9aff;
+    border-bottom-color: #ff9aff;
+}
+
+.rank-output-toggle {
+    margin-left: auto;
+}
+
+.rank-page {
+    min-height: 0;
+    flex: 1 1 auto;
+}
+
+#rank-viewer-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+}
+
+.rank-console {
+    height: 112px;
+    flex: 0 0 112px;
+    display: flex;
+    flex-direction: column;
+    background: #0a090c;
+    border-top: 1px solid #ff9aff;
+}
+
+.rank-stats-page {
+    overflow: auto;
+    padding: 16px;
+    color: #fff;
+}
+
+.rank-stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.rank-stats-header h1 {
+    margin: 0 0 5px;
+    color: #ff9aff;
+    font-size: 20px;
+}
+
+.rank-stats-header p {
+    margin: 0;
+    color: rgba(240, 248, 255, 0.68);
+    font-size: 12px;
+}
+
+.rank-stats-state {
+    padding: 5px 8px;
+    border: 1px solid #64e4bf;
+    background: transparent;
+    color: #64e4bf;
+    font: 700 11px Cantarell, sans-serif;
+    cursor: pointer;
+}
+
+.rank-player-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+    gap: 4px;
+}
+
+.rank-player-card {
+    padding: 11px;
+    background: rgba(18, 24, 40, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 3px solid #5b9cf6;
+}
+
+.rank-player-card.current-player {
+    border-color: #ff9aff;
+    border-left-color: #ff9aff;
+}
+
+.rank-player-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.rank-player-heading strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rank-player-heading span {
+    color: #64e4bf;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.rank-player-agent {
+    margin: 5px 0 9px;
+    color: #f1c766;
+    font-size: 12px;
+}
+
+.rank-player-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px 5px;
+}
+
+.rank-player-metrics small,
+.rank-player-metrics b {
+    display: block;
+}
+
+.rank-player-metrics small {
+    color: rgba(240, 248, 255, 0.5);
+    font-size: 9px;
+}
+
+.rank-player-metrics b {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.rank-empty-state {
+    grid-column: 1 / -1;
+    padding: 35px 15px;
+    color: rgba(240, 248, 255, 0.68);
+    text-align: center;
+}
+
+.rank-console-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    color: #ff9aff;
+    font: 700 11px Cantarell, "Segoe UI", sans-serif;
+    letter-spacing: 0.08em;
+}
+
+.rank-status {
+    color: #64e4bf;
+}
+
+.rank-output-list {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    padding: 0 10px 8px;
+    overflow: auto;
+    color: #d7ffd7;
+    font: 11px/1.35 Cantarell, "Segoe UI", sans-serif;
+}
+
+.rank-output-line {
+    min-height: 15px;
+    padding: 1px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 #left-panel {
     height: 100vh;
     overflow: hidden;
