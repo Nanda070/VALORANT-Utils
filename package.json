@@ -1,7 +1,7 @@
 {
   "name": "valorant-instalocker",
   "productName": "VALORANT Instalocker",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A VALORANT instalocker with a clean GUI",
   "main": "electron/main.js",
   "author": "Nanda070",
