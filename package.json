@@ -1,7 +1,7 @@
 {
   "name": "valorant-utils",
   "productName": "VALORANT Utils",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "VALORANT utilities with instalocking and rank checking",
   "main": "electron/main.js",
   "author": "Nanda070",
