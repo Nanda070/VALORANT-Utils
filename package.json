@@ -1,0 +1,57 @@
+{
+  "name": "valorant-instalocker",
+  "productName": "VALORANT Instalocker",
+  "version": "1.7.0",
+  "description": "A VALORANT instalocker with a clean GUI",
+  "main": "electron/main.js",
+  "author": "Nanda070",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "publish": "electron-builder --win -p always"
+  },
+  "build": {
+    "appId": "com.nanda070.valorant-instalocker",
+    "productName": "VALORANT Instalocker",
+    "artifactName": "VALORANT-Instalocker-Setup-${version}.${ext}",
+    "files": [
+      "electron/**/*",
+      "web/**/*",
+      "TERMS.txt",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "web/favicon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "VALORANT Instalocker",
+      "uninstallDisplayName": "VALORANT Instalocker",
+      "license": "TERMS.txt",
+      "installerIcon": "web/favicon.ico",
+      "uninstallerIcon": "web/favicon.ico",
+      "deleteAppDataOnUninstall": false
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Nanda070",
+        "repo": "VALORANT-Instalocker"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.3"
+  },
+  "devDependencies": {
+    "electron": "^29.4.6",
+    "electron-builder": "^24.13.3"
+  }
+}

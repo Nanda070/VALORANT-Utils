@@ -14,12 +14,26 @@ body {
     color: aliceblue !important;
     overflow-y: hidden;
     user-select: none;
+    font-family: Cantarell, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 
 }
 
 #left-panel {
     height: 100vh;
     overflow: hidden;
+}
+
+#main {
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+#main .text-center {
+    width: 100%;
+    justify-content: center;
 }
 
 #agents {
@@ -36,9 +50,9 @@ body {
 .agent {
 
     font-family: Staatliches;
-    font-size: 10vw;
-    line-height: 0.95;
-    margin-top: 1.2vw;
+    font-size: 5vw;
+    line-height: 0.92;
+    margin-top: 0.7vw;
     margin-right: 5vw;
     text-shadow: 1px 2px 0 black;
     position: relative;
@@ -52,7 +66,7 @@ body {
 .agent-thumb{
 
     max-width: 40vw;
-    height: 7vw;
+    height: 4.6vw;
     object-fit: cover;
     object-position: 0vw -6vw;
     position: absolute;
@@ -69,8 +83,14 @@ body {
 
 .main-section-text {
 
-    font-family: Cantarell;
-    font-size: 4vw;
+    font-family: Cantarell, "Segoe UI", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.25;
+    text-align: center;
+    padding: 0 18px;
+    margin: 0;
 
 }
 
@@ -116,7 +136,14 @@ body {
 }
 
 #socials {
-    margin-bottom: 5.4rem;
+    margin-bottom: 14px;
+    gap: 18px;
+}
+
+#socials .icon p {
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    margin: 0;
 }
 
 @media (min-width: 1980px) {
@@ -125,60 +152,84 @@ body {
     }
 }
 
+#agents {
+    scrollbar-width: thin;
+    scrollbar-color: #ff9aff transparent;
+}
+
 #agents::-webkit-scrollbar-track
 {
-	-webkit-box-shadow: inset 0 0 6px rgb(15, 14, 17);
-	background-color: rgb(15, 14, 17);
+	background: transparent;
+    box-shadow: none;
 }
 
 #agents::-webkit-scrollbar
 {
-	width: 10px;
-	background-color: rgb(15, 14, 17);
-    
+	width: 6px;
+	background: transparent;
+}
+
+#agents::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 #agents::-webkit-scrollbar-thumb
 {
-	background-color: #ffffff;
-    box-shadow: 0 0 2vh white, 0 0 4vh white, 0 0 5vh white;
+	background: #ff9aff;
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+.stop-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
 }
 
 .stop-button {
-    width: 10vw;
-    height: 5vh;
-    font-family: Cantarell;
-    font-weight: 500;
+    width: 112px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ff9aff;
+    border-radius: 4px;
     background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    display: block;
-    margin: 0 auto;
     color: #ff9aff;
-    border: 1px solid#ff9aff;
-    box-shadow: 0 0 5px #ff9aff, 0 0 5px #ff9aff inset;
-    z-index: 1;
+    font-family: Cantarell, "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    cursor: pointer;
 }
-.stop-button:after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 100%;
-    top: 0;
-    right: 0;
-    z-index: -1;
-    background: #ff9aff;
-    box-shadow:
-        0 0 20px  #ff9aff;
-    transition: all 0.3s ease;
-}
+
 .stop-button:hover {
-    color: #fff;
+    background: #ff9aff;
+    color: rgb(15, 14, 17);
 }
-.stop-button:hover:after {
-    left: 0;
-    width: 100%;
+
+.tos-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 22px;
+    padding: 0 6px;
+    border: 1px solid rgba(240, 248, 255, 0.7);
+    border-radius: 3px;
+    color: aliceblue;
+    font-family: Cantarell, "Segoe UI", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
 }
 
 .search-container {
@@ -221,4 +272,160 @@ body {
     overflow: hidden;
     pointer-events: none;
     transition: all 0.2s ease;
+}
+
+.favorite-star {
+    display: inline-flex;
+    margin-right: 0.28em;
+    vertical-align: 0.08em;
+}
+
+.favorite-star svg {
+    width: 0.38em;
+    height: 0.38em;
+    fill: #ff9aff;
+}
+
+.favorites-split {
+    height: 18px;
+    margin: 8px 16px 4px;
+    background: transparent;
+    border-top: 1px solid rgba(255, 154, 255, 0.45);
+}
+
+.favorites-split.hidden {
+    display: none;
+}
+
+.agent-menu {
+    position: fixed;
+    z-index: 300;
+    min-width: 148px;
+    background: rgb(22, 18, 28);
+    border: 1px solid #ff9aff;
+    box-shadow: 0 0 12px rgba(255, 154, 255, 0.35);
+}
+
+.agent-menu.hidden {
+    display: none;
+}
+
+.agent-menu button {
+    width: 100%;
+    background: transparent;
+    color: #ff9aff;
+    border: 0;
+    font-family: Cantarell, sans-serif;
+    font-size: 14px;
+    padding: 8px 14px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.agent-menu button:hover {
+    background: #ff9aff;
+    color: rgb(15, 14, 17);
+}
+
+.tos-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(8, 7, 10, 0.96);
+}
+
+.tos-gate.hidden {
+    display: none;
+}
+
+.tos-card {
+    width: min(680px, 100%);
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: rgb(15, 14, 17);
+    border: 1px solid #ff9aff;
+}
+
+.tos-card h1 {
+    margin: 0;
+    font-family: Cantarell, "Segoe UI", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: #ff9aff;
+}
+
+.tos-body {
+    overflow: auto;
+    flex: 1;
+    padding-right: 8px;
+    font-family: Cantarell, "Segoe UI", sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: aliceblue;
+    scrollbar-width: thin;
+    scrollbar-color: #ff9aff transparent;
+}
+
+.tos-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tos-body::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.tos-body::-webkit-scrollbar-thumb {
+    background: #ff9aff;
+    border-radius: 999px;
+}
+
+.tos-body h2 {
+    margin: 12px 0 4px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #ff9aff;
+}
+
+.tos-body p {
+    margin: 0 0 8px;
+}
+
+.tos-lead {
+    color: rgba(240, 248, 255, 0.82);
+}
+
+.tos-accept {
+    align-self: center;
+    width: 168px;
+    height: 36px;
+    margin: 0;
+    padding: 0 16px;
+    border: 1px solid #ff9aff;
+    border-radius: 4px;
+    background: transparent;
+    color: #ff9aff;
+    font-family: Cantarell, "Segoe UI", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 34px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tos-accept:hover {
+    background: #ff9aff;
+    color: rgb(15, 14, 17);
 }

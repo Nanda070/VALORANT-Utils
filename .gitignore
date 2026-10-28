@@ -3,4 +3,5 @@ venv
 VALORANT Instalocker.spec
 build
 dist
+node_modules
 *.pyc

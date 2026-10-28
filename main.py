@@ -2,7 +2,6 @@
 IMPORTS
 """
 import eel
-from screeninfo import get_monitors
 from valclient.client import Client
 import webbrowser
 import os
@@ -15,11 +14,7 @@ import time
 CONSTANTS
 """
 
-# Find the screen dimensions, reduce size x1.7 times. Scale window to that height.
-SCREEN_DIMENSIONS = (
-    list(get_monitors())[0].width // 1.7,
-    list(get_monitors())[0].height // 1.7,
-)
+SCREEN_DIMENSIONS = (853, 476)
 
 # Socials, don't touch! >:(
 INSTAGRAM = "https://www.instagram.com/kronsuki/"

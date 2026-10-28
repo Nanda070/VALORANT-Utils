@@ -38,10 +38,16 @@ Using the VALORANT API this way is against Riot's Terms of Service. This app doe
 
 ## Building
 
-- `python -m pip install -r requirements.txt`
-- Executable: `python install_and_build/build.py`
-- The file is written to `./dist/VALORANT.Instalocker.exe`
-- From source: `python main.py`
+The desktop app is Electron. The window opens at 853×476.
+
+- `npm install`
+- Run: `npm start`
+- Installer: `npm run build` writes `VALORANT-Instalocker-Setup-<version>.exe` to `./dist`
+- Publish that setup to GitHub Releases with `npm run publish`. The installed app checks those releases and asks before downloading an update.
+
+Python still runs the same UI with `python main.py` after `python -m pip install -r requirements.txt`.
+
+Right-click an agent and choose Favorite. Up to 3 favorites stay above the other agents, disappear from the main list, and are saved on this PC.
 
 ## Adding agents
 
@@ -75,7 +81,7 @@ The banner is cropped with:
 - **2023** — [SuppliedOrange](https://github.com/SuppliedOrange) releases VALORANT Instalocker, based on [valorant-agent-yoinker](https://github.com/deadly/valorant-agent-yoinker) and [valclient](https://github.com/colinhartigan/valclient.py). Black-background banners by [ExCharny](https://www.deviantart.com/excharny). Clove banner by [slynxoxo](https://twitter.com/slynxoxo/status/1771862541850861971). Previews from the [VALORANT Giphy page](https://giphy.com/playvalorant). munibug gif by [@walfieee](https://twitter.com/walfieee). Icon by [u/Odeuo](https://www.reddit.com/user/Odeuo/).
 - **2024–2025** — Iso, Clove, Vyse, Tejo, and Waylay are added as they release.
 - **May 2026** — [p0oru](https://github.com/p0oru) moves the app onto a maintained valclient fork. SuppliedOrange ships v1.5 with Miks and Veto. Some later banners and previews are from unknown sources.
-- **October 2026** — [Nanda070](https://github.com/Nanda070) adds Hush, tightens the agent list, and adds a second GitHub link. v1.6 is published from this fork.
+- **October 2026** — [Nanda070](https://github.com/Nanda070) adds Hush, favorite agents, an Electron installer, and update checks against GitHub Releases.
 
 ## Legal
 
