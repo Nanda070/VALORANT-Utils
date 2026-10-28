@@ -1,4 +1,4 @@
-![image](https://github.com/SuppliedOrange/VALORANT-Instalocker/assets/70258998/000c238b-c72e-4682-abc6-90fca7d2cbda)
+![image](https://i.imgur.com/XurNfoS.png)
 
 # VALORANT Instalocker
 A VALORANT instalocker with a clean GUI. The agent list is current through Hush (patch 13.09).
